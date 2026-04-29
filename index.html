@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="shortcut icon" href="shuek.png" type="image/x-icon">
+  <title>Sapoñero</title>
+  <style>
+    :root{
+      --bg:#0b0b0f;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.09);
+      --border: rgba(255,255,255,.12);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --gold:#d6b36a;
+      --gold2:#ffdf9a;
+      --shadow: 0 12px 40px rgba(0,0,0,.55);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1000px 600px at 50% -10%, rgba(214,179,106,.22), transparent 60%),
+                  radial-gradient(700px 500px at 90% 20%, rgba(255,223,154,.12), transparent 55%),
+                  var(--bg);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    .glass{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    /* confetti */
+    .confetti{
+      position:fixed; inset:0; pointer-events:none; overflow:hidden;
+    }
+    .confetti span{
+      position:absolute;
+      top:-20px;
+      width:10px;height:16px;
+      border-radius:3px;
+      opacity:.9;
+      transform: rotate(18deg);
+      animation: fall linear infinite;
+      filter: drop-shadow(0 8px 10px rgba(0,0,0,.35));
+    }
+    @keyframes fall{
+      to{ transform: translateY(110vh) rotate(320deg); }
+    }
+
+    /* nav */
+    header{
+      position:sticky; top:0; z-index:50;
+      padding:14px 0;
+      background: linear-gradient(180deg, rgba(11,11,15,.92), rgba(11,11,15,.65));
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      max-width:1100px; margin:0 auto; padding:0 24px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.2px;
+    }
+    .brand .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, var(--gold2), var(--gold));
+      box-shadow: 0 0 18px rgba(214,179,106,.35);
+    }
+    nav{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .pill{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size:14px;
+      transition: .2s ease;
+    }
+    .pill:hover{ transform: translateY(-1px); color: var(--text); border-color: rgba(214,179,106,.35)}
+    .pill.active{ color: var(--text); border-color: rgba(214,179,106,.45); background: rgba(214,179,106,.08) }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      padding:38px 28px;
+      margin-top:18px;
+      min-height: 340px;
+      display:flex; align-items:flex-end;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-1px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.82)),
+        url("sapoñero.png");
+      background-size: cover;
+      background-position:center;
+      filter: saturate(1.05) contrast(1.05);
+      transform: scale(1.02);
+    }
+    .hero > *{ position:relative; z-index:2; }
+    .heroContent{
+      max-width: 680px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(30px, 4.5vw, 54px);
+      line-height:1.05;
+      letter-spacing: .3px;
+      font-weight: 900;
+      text-shadow: 0 12px 40px rgba(0,0,0,.55);
+    }
+    .sub{
+      color: rgba(255,255,255,.8);
+      font-size: 16px;
+      margin: 0 0 18px;
+    }
+    .cta{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(214,179,106,.55);
+      background: radial-gradient(120% 120% at 30% 20%, rgba(255,223,154,.35), rgba(214,179,106,.20));
+      color: #1a140a;
+      font-weight: 800;
+      box-shadow: 0 16px 40px rgba(214,179,106,.18);
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .cta:hover{ transform: translateY(-1px) scale(1.01); }
+    .cta .arrow{ font-size: 16px; }
+
+    /* sections */
+    section{ margin-top: 18px; padding: 22px; }
+    .secHead{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom: 14px;
+    }
+    .secTitle{
+      display:flex; align-items:center; gap:10px;
+      font-size: 18px; font-weight: 900;
+      letter-spacing:.2px;
+    }
+    .badge{
+      font-size:12px; color: rgba(255,255,255,.72);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      padding:6px 10px; border-radius:999px;
+    }
+
+    /* stories */
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 900px){
+      .grid3{ grid-template-columns: 1fr; }
+      nav{ display:none; }
+    }
+    .card{
+      padding:16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      transition: .2s ease;
+      cursor:pointer;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .card:hover{ transform: translateY(-2px); border-color: rgba(214,179,106,.35) }
+    .card .left{
+      display:flex; align-items:center; gap:12px;
+      min-width:0;
+    }
+    .emoji{
+      width:38px; height:38px; border-radius:12px;
+      display:grid; place-items:center;
+      background: rgba(214,179,106,.14);
+      border: 1px solid rgba(214,179,106,.22);
+      font-size:18px;
+    }
+    .card h3{
+      margin:0; font-size: 15px; font-weight:900;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .card p{
+      margin:4px 0 0;
+      font-size: 13px; color: var(--muted);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .chev{ color: rgba(255,255,255,.72); font-weight:900; }
+
+    /* gallery */
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:10px;
+    }
+    @media (max-width: 900px){
+      .gallery{ grid-template-columns: repeat(2, 1fr); }
+    }
+    .shot{
+      position:relative;
+      aspect-ratio: 4/3;
+      overflow:hidden;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .shot:hover{ transform: translateY(-2px); border-color: rgba(214,179,106,.35) }
+    .shot img{
+      width:100%; height:100%;
+      object-fit:cover;
+      filter: contrast(1.02) saturate(1.05);
+      transform: scale(1.02);
+    }
+    .shot::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, transparent, rgba(0,0,0,.70));
+      opacity:.55;
+    }
+    .shot .cap{
+      position:absolute; left:10px; right:10px; bottom:10px;
+      z-index:2;
+      font-size:12px;
+      color: rgba(255,255,255,.85);
+      text-shadow: 0 10px 25px rgba(0,0,0,.6);
+    }
+
+    
+    .split{
+      display:grid;
+      grid-template-columns: 1.25fr .9fr;
+      gap:12px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .split{ grid-template-columns: 1fr; }
+    }
+    .note{
+      padding:16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+    }
+    .msg{
+      display:flex; gap:12px;
+      padding:14px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.08);
+      margin-bottom: 10px;
+    }
+    .avatar{
+      width:34px;height:34px;border-radius:50%;
+      background: radial-gradient(circle at 30% 20%, rgba(255,223,154,.55), rgba(214,179,106,.22));
+      border:1px solid rgba(214,179,106,.30);
+      flex:0 0 auto;
+    }
+    .msg strong{ display:block; font-size:13px; margin-bottom:2px; }
+    .msg span{ color: var(--muted); font-size:13px; }
+    .lock{
+      height:100%;
+      display:flex; flex-direction:column; gap:12px;
+      align-items:center; justify-content:center;
+      text-align:center;
+      padding:18px;
+    }
+    .lockIcon{
+      width:78px; height:78px;
+      border-radius:22px;
+      display:grid; place-items:center;
+      border:1px solid rgba(214,179,106,.35);
+      background: rgba(214,179,106,.10);
+      box-shadow: 0 16px 40px rgba(214,179,106,.12);
+      font-size:36px;
+    }
+    .lock h3{ margin:0; font-size:16px; font-weight:900; }
+    .lock p{ margin:0; color: var(--muted); font-size:13px; }
+    .unlockRow{
+      width:100%;
+      display:flex; gap:8px; margin-top:6px;
+    }
+    .unlockRow input{
+      flex:1;
+      padding:12px 12px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      outline:none;
+    }
+    .unlockRow button{
+      padding:12px 12px;
+      border-radius: 12px;
+      border:1px solid rgba(214,179,106,.45);
+      background: rgba(214,179,106,.14);
+      color: var(--text);
+      font-weight:900;
+      cursor:pointer;
+    }
+
+   
+    .modal{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.65);
+      display:none;
+      align-items:center; justify-content:center;
+      padding:18px;
+      z-index:100;
+    }
+    .modal.open{ display:flex; }
+    .modalCard{
+      width:min(920px, 100%);
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(16,16,22,.92);
+      box-shadow: 0 20px 70px rgba(0,0,0,.6);
+      overflow:hidden;
+    }
+    .modalTop{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .modalTop strong{ font-weight:900; }
+    .x{
+      width:36px;height:36px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      cursor:pointer;
+      font-weight:900;
+    }
+    .modalBody{ padding:16px; }
+    .modalBody img{
+      width:100%; height:auto;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      display:block;
+    }
+    .modalBody p{ color: var(--muted); margin:12px 0 0; }
+
+    
+    .hint{ color: rgba(255,255,255,.55); font-size:12px; }
+    .footer{
+      text-align:center;
+      color: rgba(255,255,255,.55);
+      padding: 22px 0 42px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <div class="confetti" id="confetti"></div>
+
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <span class="dot"></span>
+        <span>Marta_jp</span>
+      </div>
+      <nav id="nav">
+        <a class="pill active" href="#inicio">Inicio</a>
+        <a class="pill" href="#historias">Historias</a>
+        <a class="pill" href="#fotos">Fotos</a>
+        <a class="pill" href="#mensajes">Mensajes</a>
+        <a class="pill" href="#sorpresa">Sorpresa</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap" id="inicio">
+    <div class="hero glass">
+      <div class="heroContent">
+        <h1>Para el pumpeañero más JP</h1>
+        <p class="sub">No tendrá pelo pero si muchas ganas de agredir patos <br> No te adelantes a la sorpresa aún, JP (ve bajando nomás)
+        <br> Esta vez si está bien eskrivido todo ✨</p>
+        <button class="cta" id="cta">
+           SORPRESITA<span class="arrow"></span>
+        </button>
+        <div class="hint" style="margin-top:10px;">felices 27✨</div>
+      </div>
+    </div>
+
+    <section id="historias" class="glass">
+      <div class="secHead">
+        <div class="secTitle">Historias</div>
+        <span class="badge">toca una tarjeta</span>
+      </div>
+
+      <div class="grid3" id="stories">
+   
+      </div>
+    </section>
+
+
+    <section id="fotos" class="glass">
+      <div class="secHead">
+        <div class="secTitle">Recuerditos </div>
+        <a class="badge" href="#fotos">Roblosianos</a>
+      </div>
+
+      <div class="gallery" id="gallery">
+        
+      </div>
+      <div class="hint" style="margin-top:10px;">No tengo muchas</div>
+    </section>
+
+    
+    <section id="mensajes" class="glass">
+      <div class="secHead">
+        <div class="secTitle">Mensajitos </div>
+        <span class="badge">:b</span>
+      </div>
+
+      <div class="split">
+        <div class="note">
+          <div class="secTitle" style="margin-bottom:12px;">Bandeja de mensajecitos</div>
+
+          <div class="msg">
+            <div class="avatar"></div>
+            <div>
+              <strong>Clancy</strong>
+              <span>Funen al cumpleañero. <br> Insulten al cumpleañero. <br> Peguenle al cumpleañero. <br> Abracen al cumpleañero</span>
+            </div>
+          </div>
+
+          <div class="msg">
+            <div class="avatar"></div>
+            <div>
+              <strong>Annikeons</strong>
+              <span>Dame un Grrrr</span>
+            </div>
+          </div>
+
+           <div class="msg">
+            <div class="avatar"></div>
+            <div>
+              <strong>Nicole</strong>
+              <span>comareeeeeeeeeeeeeeeeeeeeee  <br> comare, comare, comare </span>
+            </div>
+          </div>
+
+          <div class="msg">
+            <div class="avatar"></div>
+            <div>
+              <strong> yo, o sea, yo, no tú</strong>
+              <span> felicidades para mi comadre en su diita </span>
+            </div>
+          </div>
+
+          <div class="hint">algo tranqui (nomefunes)</div>
+        </div>
+
+        <div id="sorpresa" class="note lock">
+          <div class="lockIcon">🔒</div>
+          <h3>Si ya viste todo aora si</h3>
+          <p>desblokeame</p>
+          <div class="unlockRow">
+            <input id="code" placeholder="Código Aquí uwu" />
+            <button id="unlockBtn">Desbloquear</button>
+          </div>
+          <div class="hint"> <b> Si el  codigo deseas tener, del pato lo vas a obtener</b> (A que no lo adivinas).</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">Acereje jadejedejedetuveje <br> japi berdei tuyu japi berdei tuyuuu japiberdei comare, 
+    japiberdei tuyuuuuuu</div>
+  </main>
+
+  
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modalCard">
+      <div class="modalTop">
+        <strong id="modalTitle">Título</strong>
+        <button class="x" id="closeModal">✕</button>
+      </div>
+      <div class="modalBody" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    
+    const STORIES = [
+      {
+        emoji:"🦆",
+        title:"Un pato muypato",
+        subtitle:"cuacua",
+        body:" Un lindo patito blanco venía de visitar a su abuela, iba cantando virtual diva mientras retornaba a casa, no se había tropezado con ninguna rama, no se le había quedado nada en casa de su abuela, así que todo marchaba bien. Pero como dicen, el salado nunca deja de ser salado, y que se le aparece el mismísimo Jp, el Jp es un coso que roba abuelitas, por eso siempre hay que saber cómo ahuyentarlo. El Jp le llevaba ventaja al pobre patito porque era un experto en robar abuelas. Pero el pato no se dejó y lo reto a un duelo, este consistía en quien muriera primero en Blair se quedaba con la abuela, el Jp creyó que sería muy fácil y aceptó.El Jp se llevó una gran sorpresa al ver que apenas entrando al juego el pato ya se había muerto, se llenó de rabia y se fue. De esa manera el pato logró salvar a su abuela y demostrar que es tremendo manco."
+      },
+      {
+        emoji:"🌚",
+        title:"Negrofobia",
+        subtitle:"El menos racista de su casa",
+        body:"Marta J.P era un hamster que nació con una rara condición llamada negrofobia, si el veía la mínima cosa negra entraba en pánico. Tan grave fue la situación que tuvieron que aislarlo en un lugar completamente blanco, sin sombra, sin absolutamente nada negro. Pasó así por tantos años que poco a poco empezó a olvidar su condición y creyó que sería buena idea salir de su zona de confort y explorar el mundo. Así lo hizo, salió y lo primero que vió fue una luciérnaga que no tenía su lucecita encendida, justo en ese momento empezó a sentir que le daba taquicardia, lo primero que hizo fue echarle medio litro de cloro y automáticamente empezó a blanquear.Entonces se dió cuenta de que podía blanquear todo lo que quisiera y entonces todo se volvió blanco, menos un patito negro que por más que le echara cloro no blanqueaba, de tanto estrés se le cayó el pelo al hamster y quedó rosado, yanoblanco. Se dice que capturó al pato, le pegó y lo amarró y lo mantiene bañandose con cloro o tinte pero como el pato tiene plumas impermeables pos nomás no."
+      },
+      {
+        emoji:"🐸",
+        title:"Sapotico",
+        subtitle:"wao",
+        body:"Detrás de los árboles de Coca-Cola estaba un sapo amarillo comiendo ramitas de pollo. En eso, llega un sapo rojo a pedirle de sus ramitas, a lo que el sapo amarillo le contesta con un rotundo no. El sapo rojo no se enoja, simplemente le acaricia la cabeza con un zapato konvers. Entonces desde ese día el sapo amarillo se hizo humilde, siempre que tenía ramitas le brindaba a otros sapos a su alrededor. Un día, un sapo azúl que pasaba por el árbol de ají le pidió al sapo amarillo que le brindara de sus ramitas para mezclarlas con el ají, el sapo amarillo medio extrañado acepta y le da de sus ramitas y le pasa un ajisito. Oh, sorpresa, el sapo azúl se convierte en un delfín foca y le comenta al sapo amarillo que se disfrazó de un sapo azúl para poner a prueba su umildad, el sapo amarillo se va para atrás al ver que el delfín foca el deja un saco lleno de robux. Desde ese día, el sapo amarillo dejó de ser humilde y vivió derrochando los robuc sin pensar en su jubilación, al final, el sapo morado terminó manteniendo al sapo amarillo porque estaba viejo y ya no quería chambear."
+      },
+      {
+        emoji:"🖋️",
+        title:"Un Do-bingo",
+        subtitle:"binguito",
+        body:"Estaba ya por comenzar el bingo, estaba todo en su lugar, menos una cosa, el que cantaba bingo. Todos comenzaron la búsqueda ya que sin el no se podía jugar, era el único que no hacía trampa. Buscaron por allí, por allá, más allá y nada. Entonces a alguien se le ocurrió preguntarle al viejo malparido que no iba a los bingos porque también iba gente de color cafecito, así lo hicieron y fueron a por él viejo. Ni muy bien llegaron y se toparon con una escena increíble, no solo estaba el viejo JP, si no también el que cantaba en el bingo. Fue allí donde se enteraron que el viejo era el abuelo del que cantaba bingo, además, que este viejo estaba maltratando al que cantaba bingo porque no le conseguía una buena foto de una gótica."
+      },
+      {
+        emoji:"🐧",
+        title:"panconatun y mostaza",
+        subtitle:"",
+        body:"Sucede y acontece que, en lo más profundo del bosque vivía un pingüino llamado panconatun. A panconatun le gustaba ir a jugar con su mejor amigo que se llamaba mostaza, siempre que podían jugaban juegos tranquilos que sacaban de los vídeos de mistelbis. Cuando panconatun fue a buscar a su casa una pelota para jugar ajedrez, su mamá ya no lo dejó salir, se puso muy triste porque mostaza se iba a quedar ahí esperandolo hasta quien sabe qué hora. Mostaza, por su parte, ya cansado de estar un buen rato de pie se sentó debajo de un árbol de mango, se puso a pensar en panconatun, ojalá se apurara porque ya se estaba haciendo de nochesita y si llegaba tarde lo iban a regañar. En todo eso prefirió bajar el cortisol y se echó una siesta. Cuando abrió los ojos se llevó una gran sorpresa, delante de él estaba un pingüino gigante y raro que lo veía triste. Mostaza le preguntó cómo se llamaba y este le contestó que se llamaba Marta, mostaza le preguntó porque estaba tan triste y Marta le contestó que estaba triste porque solo iba a comerse a mostaza sin panconatun."
+      },
+      {
+        emoji:"👴🏻",
+        title:"yuyu coco",
+        subtitle:"yuyu coco",
+        body:"Cuenta la leyenda que hace muchos años, existía un viejito bravo que le encantaba coleccionar dinosaurios, tal era su afición que se terminó robando todos los dinosaurios del planeta y que fingió una falsa caída de meteoritos para que nadie sospechara de él. Se dice que hasta el día de hoy sigue escondido en algún lugar del mundo esos dinosaurios y que no solo los tiene encerrados, si no también que los obliga a generar dinero para comprarse robux y completos incompletos."
+      },
+    ];
+
+    
+    const PHOTOS = [
+      { url:"marta1.png", cap:"Partiditas en el tueni uan" },
+      { url:"marta2.png", cap:"Acompañandote a ser un sapo triple jp✌🏻✨" },
+      { url:"marta3.png", cap:"Tirando factos en la pizzería" },
+      { url:"marta4.png", cap:"En Blair (vamos un bleircito)" },
+      { url:"marta6.png", cap:"Moviendo el esqueleto" },
+      { url:"marta7.png", cap:"Marta clonao " },
+      { url:"marta8.png", cap:"Marta Jp Mars <br> cuacua" },
+      { url:"marta0.png", cap:"eso no nos sirve muxo" },
+      { url:"marta12.png", cap:"nadando sin awa" },
+      { url:"marta9.png", cap:"el sapo triple jp y atrás el rey sapo" },
+      { url:"marta10.png", cap:"dibujando" },
+      { url:"marta11.png", cap:"me ibas a matar dsgcd" },
+    ];
+
+    const UNLOCK_CODE = "cuacua"; // clavecita
+
+    const storiesEl = document.getElementById("stories");
+    STORIES.forEach((s, idx) => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <div class="left">
+          <div class="emoji">${s.emoji}</div>
+          <div style="min-width:0">
+            <h3>${s.title}</h3>
+            <p>${s.subtitle}</p>
+          </div>
+        </div>
+        <div class="chev">›</div>
+      `;
+      div.addEventListener("click", () => openModal(`Historia ${idx+1}: ${s.title}`, `
+        <p style="margin:0 0 10px;color:rgba(255,255,255,.85);font-weight:800">${s.subtitle}</p>
+        <p style="margin:0;color:rgba(255,255,255,.75)">${s.body}</p>
+      `));
+      storiesEl.appendChild(div);
+    });
+
+   
+    const galleryEl = document.getElementById("gallery");
+    PHOTOS.forEach((p, idx) => {
+      const div = document.createElement("div");
+      div.className = "shot";
+      div.innerHTML = `
+        <img src="${p.url}" alt="foto ${idx+1}" loading="lazy">
+        <div class="cap">${p.cap}</div>
+      `;
+      div.addEventListener("click", () => openModal("Foto", `
+        <img src="${p.url}" alt="foto grande">
+        <p>${p.cap}</p>
+      `));
+      galleryEl.appendChild(div);
+    });
+
+    const modal = document.getElementById("modal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalBody = document.getElementById("modalBody");
+    const closeModal = document.getElementById("closeModal");
+
+    function openModal(title, bodyHtml){
+      modalTitle.textContent = title;
+      modalBody.innerHTML = bodyHtml;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+    }
+    function close(){
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+    closeModal.addEventListener("click", close);
+    modal.addEventListener("click", (e) => { if(e.target === modal) close(); });
+    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") close(); });
+
+
+    const unlockBtn = document.getElementById("unlockBtn");
+    const codeInput = document.getElementById("code");
+    const surpriseBox = document.getElementById("sorpresa");
+
+    unlockBtn.addEventListener("click", () => {
+      const val = (codeInput.value || "").trim().toLowerCase();
+      if(val === UNLOCK_CODE){
+        surpriseBox.innerHTML = `
+          <div class="lockIcon">🎁</div>
+          <h3>¡Omg lo desblokiaste!</h3>
+          <p>Esto fue hacido con todo el cariño del mundo</p>
+          <div style="width:100%;margin-top:10px">
+            <div class="glass" style="padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04)">
+              <p style="margin:0 0 10px;color:rgba(255,255,255,.8)">
+                Marta: <br><br>
+                Cuando te conocí, dudaba de que eras, si eras marta o marto, al final resultaste siendo marto, jsjsjsj. <br> 
+              Lo que no dudé fue de que eras una gran persona, detrás de esa persona racista, calva y grosera se esconde un ser 
+              que sabe ser un muy buen amigo, tqm. 
+              Gracias por ser una persona de gran apoyo en todo este tiempo que te llevo conociendo, ojalá algún día pueda regresarte ese favor ✨(me dió pena jsjsjsjsjs). <br>
+               Aunque bueno, regresando al tema principal, Hoy hace 27
+              años (antes de la evolución del hombre) cayó una estrellita del cielo. Que te la pases muy de maravilla hoy, que nunca se acaben esas ganas de cumplir 
+              tus objetivos en la vida y por más años en dónde se te pueda seguir felicitando. <br>
+ ¡Que viva el cumpleañero!
+
+              <br> Psdt:No me dieron el crédito de préstamo para comprar y enviarle un chicle comare ;(
+              <br> psdt2: Recuerde que la comunicación siempre es la base, así como la mantequilla es la base para las matemáticas, <br>
+              así como los patos son la base de las casas, cómo los pistones son la base de los libros. <br>
+               asi es usted la base de los jps, seletqm comare, uwu.
+              </p>
+              <a class="cta" style="justify-content:center;width:100%" href="#inicio">subir</a>
+            </div>
+          </div>
+        `;  
+        burstConfetti();
+      } else {
+        unlockBtn.textContent = "Intenta otra vez";
+        setTimeout(()=> unlockBtn.textContent="Desbloquear", 900);
+      }
+    });
+
+   
+    document.getElementById("cta").addEventListener("click", () => {
+      document.getElementById("sorpresa").scrollIntoView({behavior:"smooth", block:"center"});
+    });
+
+    const pills = [...document.querySelectorAll(".pill")];
+    const sections = ["inicio","historias","fotos","mensajes","sorpresa"].map(id => document.getElementById(id));
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){
+          pills.forEach(p=>p.classList.remove("active"));
+          const href = "#" + en.target.id;
+          const el = pills.find(p=>p.getAttribute("href") === href);
+          if(el) el.classList.add("active");
+        }
+      });
+    }, {threshold:.35});
+    sections.forEach(s => s && obs.observe(s));
+
+ 
+    const confettiEl = document.getElementById("confetti");
+    const colors = ["#d6b36a","#ffdf9a","#ffffff","#7dd3fc","#a78bfa"];
+
+    function spawnConfetti(count=70){
+      for(let i=0;i<count;i++){
+        const s = document.createElement("span");
+        const left = Math.random()*100;
+        const dur = 3 + Math.random()*4;
+        const delay = Math.random()*1.2;
+        const size = 7 + Math.random()*10;
+        s.style.left = left + "vw";
+        s.style.animationDuration = dur + "s";
+        s.style.animationDelay = delay + "s";
+        s.style.width = size + "px";
+        s.style.height = (size*1.4) + "px";
+        s.style.background = colors[Math.floor(Math.random()*colors.length)];
+        s.style.opacity = (0.55 + Math.random()*0.45).toFixed(2);
+        confettiEl.appendChild(s);
+
+
+        setTimeout(()=> s.remove(), (dur + delay + 0.5)*1000);
+      }
+    }
+
+
+    spawnConfetti(36);
+
+    function burstConfetti(){
+      spawnConfetti(120);
+      setTimeout(()=> spawnConfetti(90), 250);
+      setTimeout(()=> spawnConfetti(70), 650);
+    }
+  </script>
+</body>
+</html>
