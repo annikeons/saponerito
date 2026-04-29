@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="shortcut icon" href="shuek.png" type="image/x-icon">
-  <title>Para el pumpeañero más JP</title>
+  <title>Sapoñero</title>
   <style>
     :root{
       --bg:#0b0b0f;
@@ -91,7 +91,6 @@
     .pill:hover{ transform: translateY(-1px); color: var(--text); border-color: rgba(214,179,106,.35)}
     .pill.active{ color: var(--text); border-color: rgba(214,179,106,.45); background: rgba(214,179,106,.08) }
 
-    /* hero */
     .hero{
       position:relative;
       overflow:hidden;
@@ -105,7 +104,7 @@
       position:absolute; inset:-1px;
       background:
         linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.82)),
-        url("fondi.jpg");
+        url("sapoñero.png");
       background-size: cover;
       background-position:center;
       filter: saturate(1.05) contrast(1.05);
@@ -243,7 +242,7 @@
       text-shadow: 0 10px 25px rgba(0,0,0,.6);
     }
 
-    /* messages + surprise */
+    
     .split{
       display:grid;
       grid-template-columns: 1.25fr .9fr;
@@ -316,7 +315,7 @@
       cursor:pointer;
     }
 
-    /* modal */
+   
     .modal{
       position:fixed; inset:0;
       background: rgba(0,0,0,.65);
@@ -357,7 +356,7 @@
     }
     .modalBody p{ color: var(--muted); margin:12px 0 0; }
 
-    /* small helper */
+    
     .hint{ color: rgba(255,255,255,.55); font-size:12px; }
     .footer{
       text-align:center;
@@ -369,7 +368,7 @@
 </head>
 <body>
 
-  <!-- confetti -->
+
   <div class="confetti" id="confetti"></div>
 
   <header>
@@ -392,15 +391,15 @@
     <div class="hero glass">
       <div class="heroContent">
         <h1>Para el pumpeañero más JP</h1>
-        <p class="sub">No tendrá pelo pero si muchas ganas de agredir patos <br> No te adelantes a la sorpresa aún, JP 😡</p>
+        <p class="sub">No tendrá pelo pero si muchas ganas de agredir patos <br> No te adelantes a la sorpresa aún, JP (ve bajando nomás)
+        <br> Esta vez si está bien eskrivido todo ✨</p>
         <button class="cta" id="cta">
-          Ver sorpresa <span class="arrow">↓</span>
+           SORPRESITA<span class="arrow"></span>
         </button>
         <div class="hint" style="margin-top:10px;">felices 27✨</div>
       </div>
     </div>
 
-    <!-- Historias -->
     <section id="historias" class="glass">
       <div class="secHead">
         <div class="secTitle">Historias</div>
@@ -408,24 +407,24 @@
       </div>
 
       <div class="grid3" id="stories">
-        <!-- cards injected by JS -->
+   
       </div>
     </section>
 
-    <!-- Fotos -->
+
     <section id="fotos" class="glass">
       <div class="secHead">
         <div class="secTitle">Recuerditos </div>
-        <a class="badge" href="#fotos">Ver más →</a>
+        <a class="badge" href="#fotos">Roblosianos</a>
       </div>
 
       <div class="gallery" id="gallery">
-        <!-- images injected by JS -->
+        
       </div>
-      <div class="hint" style="margin-top:10px;">Solo del Robloxio</div>
+      <div class="hint" style="margin-top:10px;">No tengo muchas</div>
     </section>
 
-    <!-- Mensajes + Sorpresa -->
+    
     <section id="mensajes" class="glass">
       <div class="secHead">
         <div class="secTitle">Mensajitos </div>
@@ -440,7 +439,7 @@
             <div class="avatar"></div>
             <div>
               <strong>Clancy</strong>
-              <span>Funen a ese maltratador de robloxianos 😡, pero primero que reparta la torta.</span>
+              <span>Funen al cumpleañero. <br> Insulten al cumpleañero. <br> Peguenle al cumpleañero. <br> Abracen al cumpleañero</span>
             </div>
           </div>
 
@@ -456,30 +455,30 @@
             <div class="avatar"></div>
             <div>
               <strong>Nicole</strong>
-              <span>No entendí</span>
+              <span>comareeeeeeeeeeeeeeeeeeeeee  <br> comare, comare, comare </span>
             </div>
           </div>
 
           <div class="msg">
             <div class="avatar"></div>
             <div>
-              <strong>Voces de mi cabeza</strong>
-              <span> felicidades para el weon cumpleañero</span>
+              <strong> yo, o sea, yo, no tú</strong>
+              <span> felicidades para mi comadre en su diita </span>
             </div>
           </div>
 
-          <div class="hint">algo tranqui</div>
+          <div class="hint">algo tranqui (nomefunes)</div>
         </div>
 
         <div id="sorpresa" class="note lock">
           <div class="lockIcon">🔒</div>
           <h3>Si ya viste todo aora si</h3>
-          <p>¿Estás listo para desbloquearla?</p>
+          <p>desblokeame</p>
           <div class="unlockRow">
             <input id="code" placeholder="Código Aquí uwu" />
             <button id="unlockBtn">Desbloquear</button>
           </div>
-          <div class="hint"> <b> Si el  codigo deseas tener, habla con el pato</b> (A que no lo adivinas).</div>
+          <div class="hint"> <b> Si el  codigo deseas tener, del pato lo vas a obtener</b> (A que no lo adivinas).</div>
         </div>
       </div>
     </section>
@@ -488,7 +487,7 @@
     japiberdei tuyuuuuuu</div>
   </main>
 
-  <!-- Modal -->
+  
   <div class="modal" id="modal" aria-hidden="true">
     <div class="modalCard">
       <div class="modalTop">
@@ -500,11 +499,11 @@
   </div>
 
   <script>
-    // ====== DATA ======
+    
     const STORIES = [
       {
         emoji:"🦆",
-        title:"UN pato muypato",
+        title:"Un pato muypato",
         subtitle:"cuacua",
         body:" Un lindo patito blanco venía de visitar a su abuela, iba cantando virtual diva mientras retornaba a casa, no se había tropezado con ninguna rama, no se le había quedado nada en casa de su abuela, así que todo marchaba bien. Pero como dicen, el salado nunca deja de ser salado, y que se le aparece el mismísimo Jp, el Jp es un coso que roba abuelitas, por eso siempre hay que saber cómo ahuyentarlo. El Jp le llevaba ventaja al pobre patito porque era un experto en robar abuelas. Pero el pato no se dejó y lo reto a un duelo, este consistía en quien muriera primero en Blair se quedaba con la abuela, el Jp creyó que sería muy fácil y aceptó.El Jp se llevó una gran sorpresa al ver que apenas entrando al juego el pato ya se había muerto, se llenó de rabia y se fue. De esa manera el pato logró salvar a su abuela y demostrar que es tremendo manco."
       },
@@ -519,7 +518,25 @@
         title:"Sapotico",
         subtitle:"wao",
         body:"Detrás de los árboles de Coca-Cola estaba un sapo amarillo comiendo ramitas de pollo. En eso, llega un sapo rojo a pedirle de sus ramitas, a lo que el sapo amarillo le contesta con un rotundo no. El sapo rojo no se enoja, simplemente le acaricia la cabeza con un zapato konvers. Entonces desde ese día el sapo amarillo se hizo humilde, siempre que tenía ramitas le brindaba a otros sapos a su alrededor. Un día, un sapo azúl que pasaba por el árbol de ají le pidió al sapo amarillo que le brindara de sus ramitas para mezclarlas con el ají, el sapo amarillo medio extrañado acepta y le da de sus ramitas y le pasa un ajisito. Oh, sorpresa, el sapo azúl se convierte en un delfín foca y le comenta al sapo amarillo que se disfrazó de un sapo azúl para poner a prueba su umildad, el sapo amarillo se va para atrás al ver que el delfín foca el deja un saco lleno de robux. Desde ese día, el sapo amarillo dejó de ser humilde y vivió derrochando los robuc sin pensar en su jubilación, al final, el sapo morado terminó manteniendo al sapo amarillo porque estaba viejo y ya no quería chambear."
-      }
+      },
+      {
+        emoji:"🖋️",
+        title:"Un Do-bingo",
+        subtitle:"binguito",
+        body:"Estaba ya por comenzar el bingo, estaba todo en su lugar, menos una cosa, el que cantaba bingo. Todos comenzaron la búsqueda ya que sin el no se podía jugar, era el único que no hacía trampa. Buscaron por allí, por allá, más allá y nada. Entonces a alguien se le ocurrió preguntarle al viejo malparido que no iba a los bingos porque también iba gente de color cafecito, así lo hicieron y fueron a por él viejo. Ni muy bien llegaron y se toparon con una escena increíble, no solo estaba el viejo JP, si no también el que cantaba en el bingo. Fue allí donde se enteraron que el viejo era el abuelo del que cantaba bingo, además, que este viejo estaba maltratando al que cantaba bingo porque no le conseguía una buena foto de una gótica."
+      },
+      {
+        emoji:"🐧",
+        title:"panconatun y mostaza",
+        subtitle:"",
+        body:"Sucede y acontece que, en lo más profundo del bosque vivía un pingüino llamado panconatun. A panconatun le gustaba ir a jugar con su mejor amigo que se llamaba mostaza, siempre que podían jugaban juegos tranquilos que sacaban de los vídeos de mistelbis. Cuando panconatun fue a buscar a su casa una pelota para jugar ajedrez, su mamá ya no lo dejó salir, se puso muy triste porque mostaza se iba a quedar ahí esperandolo hasta quien sabe qué hora. Mostaza, por su parte, ya cansado de estar un buen rato de pie se sentó debajo de un árbol de mango, se puso a pensar en panconatun, ojalá se apurara porque ya se estaba haciendo de nochesita y si llegaba tarde lo iban a regañar. En todo eso prefirió bajar el cortisol y se echó una siesta. Cuando abrió los ojos se llevó una gran sorpresa, delante de él estaba un pingüino gigante y raro que lo veía triste. Mostaza le preguntó cómo se llamaba y este le contestó que se llamaba Marta, mostaza le preguntó porque estaba tan triste y Marta le contestó que estaba triste porque solo iba a comerse a mostaza sin panconatun."
+      },
+      {
+        emoji:"👴🏻",
+        title:"yuyu coco",
+        subtitle:"yuyu coco",
+        body:"Cuenta la leyenda que hace muchos años, existía un viejito bravo que le encantaba coleccionar dinosaurios, tal era su afición que se terminó robando todos los dinosaurios del planeta y que fingió una falsa caída de meteoritos para que nadie sospechara de él. Se dice que hasta el día de hoy sigue escondido en algún lugar del mundo esos dinosaurios y que no solo los tiene encerrados, si no también que los obliga a generar dinero para comprarse robux y completos incompletos."
+      },
     ];
 
     
@@ -528,15 +545,18 @@
       { url:"marta2.png", cap:"Acompañandote a ser un sapo triple jp✌🏻✨" },
       { url:"marta3.png", cap:"Tirando factos en la pizzería" },
       { url:"marta4.png", cap:"En Blair (vamos un bleircito)" },
-      { url:"marta5.png", cap:"JSJSJJSJSJSJSJS" },
       { url:"marta6.png", cap:"Moviendo el esqueleto" },
-      { url:"marta7.png", cap:"Marta clonao" },
-      { url:"marta8.png", cap:"Marta Jp Mars" },
+      { url:"marta7.png", cap:"Marta clonao " },
+      { url:"marta8.png", cap:"Marta Jp Mars <br> cuacua" },
+      { url:"marta0.png", cap:"eso no nos sirve muxo" },
+      { url:"marta12.png", cap:"nadando sin awa" },
+      { url:"marta9.png", cap:"el sapo triple jp y atrás el rey sapo" },
+      { url:"marta10.png", cap:"dibujando" },
+      { url:"marta11.png", cap:"me ibas a matar dsgcd" },
     ];
 
-    const UNLOCK_CODE = "jp2026"; // <- cambia esto
+    const UNLOCK_CODE = "cuacua"; // clavecita
 
-    // ====== RENDER STORIES ======
     const storiesEl = document.getElementById("stories");
     STORIES.forEach((s, idx) => {
       const div = document.createElement("div");
@@ -558,7 +578,7 @@
       storiesEl.appendChild(div);
     });
 
-    // ====== RENDER GALLERY ======
+   
     const galleryEl = document.getElementById("gallery");
     PHOTOS.forEach((p, idx) => {
       const div = document.createElement("div");
@@ -574,7 +594,6 @@
       galleryEl.appendChild(div);
     });
 
-    // ====== MODAL ======
     const modal = document.getElementById("modal");
     const modalTitle = document.getElementById("modalTitle");
     const modalBody = document.getElementById("modalBody");
@@ -594,7 +613,7 @@
     modal.addEventListener("click", (e) => { if(e.target === modal) close(); });
     document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") close(); });
 
-    // ====== UNLOCK SURPRISE ======
+
     const unlockBtn = document.getElementById("unlockBtn");
     const codeInput = document.getElementById("code");
     const surpriseBox = document.getElementById("sorpresa");
@@ -613,20 +632,21 @@
                 Cuando te conocí, dudaba de que eras, si eras marta o marto, al final resultaste siendo marto, jsjsjsj. <br> 
               Lo que no dudé fue de que eras una gran persona, detrás de esa persona racista, calva y grosera se esconde un ser 
               que sabe ser un muy buen amigo, tqm. 
-              Recuerda siempre que así como sueles ser un apoyo para mí, acá también estaré por si algún día 
-              quieres charlar o si de alguna manera te puedo ayudar. Aunque bueno, regresando al tema principal, Hoy hace 27
-              años (antes de la evolución del hombre) cayó una estrellita del cielo. Que te la pases muy de maravilla hoy, y que siempre tenga la 
-              oportunidad de desearte feliz cumpleaños muekekekekeke. ¡Que viva el cumpleañero!
+              Gracias por ser una persona de gran apoyo en todo este tiempo que te llevo conociendo, ojalá algún día pueda regresarte ese favor ✨(me dió pena jsjsjsjsjs). <br>
+               Aunque bueno, regresando al tema principal, Hoy hace 27
+              años (antes de la evolución del hombre) cayó una estrellita del cielo. Que te la pases muy de maravilla hoy, que nunca se acaben esas ganas de cumplir 
+              tus objetivos en la vida y por más años en dónde se te pueda seguir felicitando. <br>
+ ¡Que viva el cumpleañero!
 
               <br> Psdt:No me dieron el crédito de préstamo para comprar y enviarle un chicle comare ;(
-              <br> psdt2: Si en algún momento digo o hago algo que te cause incomodidad o enojo dimelo, aunq no lo crea
-              aprendí a desir perdón y no volver a repetirlo, también sé decir por favor y gracias y también Jp caresapo. 
-              <br> -Nicole 🦆
+              <br> psdt2: Recuerde que la comunicación siempre es la base, así como la mantequilla es la base para las matemáticas, <br>
+              así como los patos son la base de las casas, cómo los pistones son la base de los libros. <br>
+               asi es usted la base de los jps, seletqm comare, uwu.
               </p>
-              <a class="cta" style="justify-content:center;width:100%" href="#inicio">Volver arriba ↑</a>
+              <a class="cta" style="justify-content:center;width:100%" href="#inicio">subir</a>
             </div>
           </div>
-        `;
+        `;  
         burstConfetti();
       } else {
         unlockBtn.textContent = "Intenta otra vez";
@@ -634,12 +654,11 @@
       }
     });
 
-    // CTA scroll
+   
     document.getElementById("cta").addEventListener("click", () => {
       document.getElementById("sorpresa").scrollIntoView({behavior:"smooth", block:"center"});
     });
 
-    // ====== NAV ACTIVE ======
     const pills = [...document.querySelectorAll(".pill")];
     const sections = ["inicio","historias","fotos","mensajes","sorpresa"].map(id => document.getElementById(id));
     const obs = new IntersectionObserver((entries)=>{
@@ -654,7 +673,7 @@
     }, {threshold:.35});
     sections.forEach(s => s && obs.observe(s));
 
-    // ====== CONFETTI ======
+ 
     const confettiEl = document.getElementById("confetti");
     const colors = ["#d6b36a","#ffdf9a","#ffffff","#7dd3fc","#a78bfa"];
 
@@ -674,7 +693,7 @@
         s.style.opacity = (0.55 + Math.random()*0.45).toFixed(2);
         confettiEl.appendChild(s);
 
-        // cleanup
+
         setTimeout(()=> s.remove(), (dur + delay + 0.5)*1000);
       }
     }
